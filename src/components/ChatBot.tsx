@@ -546,7 +546,13 @@ export default function ChatBot() {
       <button
         className="chat-toggle"
         onClick={() => setOpen(!open)}
-        style={s.toggle}
+        style={{
+          ...s.toggle,
+          opacity: open ? 0 : 1,
+          transform: open ? 'scale(0.8)' : 'scale(1)',
+          pointerEvents: open ? 'none' : 'all',
+          transition: 'all 0.2s ease',
+        }}
         aria-label="Chat"
       >
         {open ? (
