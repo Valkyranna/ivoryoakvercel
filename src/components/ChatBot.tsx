@@ -655,6 +655,16 @@ export default function ChatBot() {
           animation: messageIn 0.25s ease forwards;
         }
         @media (max-width: 768px) {
+          .chat-toggle {
+            bottom: 70px !important;
+            width: 44px !important;
+            height: 44px !important;
+            background: #FFFFFF !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12) !important;
+          }
+          .chat-toggle svg {
+            stroke: #C8A84E !important;
+          }
           .chat-panel {
             width: 100vw !important;
             left: 0 !important;
