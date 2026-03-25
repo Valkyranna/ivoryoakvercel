@@ -560,7 +560,7 @@ export default function ChatBot() {
       </button>
 
       {/* Chat panel */}
-      <div style={{
+      <div className="chat-panel" style={{
         ...s.panel,
         opacity: open ? 1 : 0,
         transform: open ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
@@ -646,24 +646,23 @@ export default function ChatBot() {
         }
         @media (max-width: 768px) {
           .chat-panel {
-            width: calc(100vw - 12px) !important;
-            right: 6px !important;
+            width: 100vw !important;
+            left: 0 !important;
+            right: 0 !important;
             bottom: 76px !important;
-            height: 60vh !important;
-            max-height: 500px !important;
-            border-radius: 16px 16px 0 0 !important;
+            height: calc(100dvh - 76px) !important;
+            max-height: none !important;
+            border-radius: 0 !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-bottom: none !important;
           }
           .chat-msg-enter {
             animation-duration: 0.2s !important;
           }
-        }
-        @media (max-width: 380px) {
-          .chat-panel {
-            width: 100vw !important;
-            right: 0 !important;
-            left: 0 !important;
-            bottom: 76px !important;
-            border-radius: 16px 16px 0 0 !important;
+          .chat-panel input[type="text"] {
+            font-size: 16px !important;
+            padding: 12px 14px !important;
           }
         }
       `}</style>
@@ -735,9 +734,10 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8,
   },
   optionBtn: {
-    padding: '6px 12px', background: '#FFFFFF', border: '1px solid #EAE2D6',
-    borderRadius: 100, fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem',
+    padding: '8px 14px', background: '#FFFFFF', border: '1px solid #EAE2D6',
+    borderRadius: 100, fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
     fontWeight: 500, color: '#6B5744', cursor: 'pointer', transition: 'all 0.15s',
+    minHeight: 36,
   },
   typing: {
     display: 'flex', gap: 4, padding: '12px 16px',
