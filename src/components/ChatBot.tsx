@@ -659,13 +659,11 @@ export default function ChatBot() {
             width: 100vw !important;
             left: 0 !important;
             right: 0 !important;
-            bottom: 76px !important;
-            height: calc(100dvh - 76px) !important;
+            bottom: 0 !important;
+            height: calc(100dvh) !important;
             max-height: none !important;
             border-radius: 0 !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-bottom: none !important;
+            border: none !important;
           }
           .chat-msg-enter {
             animation-duration: 0.2s !important;
