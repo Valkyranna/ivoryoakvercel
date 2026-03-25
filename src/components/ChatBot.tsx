@@ -556,11 +556,11 @@ export default function ChatBot() {
         aria-label="Chat"
       >
         {open ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A84E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
         ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8A84E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         )}
@@ -694,9 +694,9 @@ export default function ChatBot() {
 const s: Record<string, React.CSSProperties> = {
   toggle: {
     position: 'fixed', bottom: 24, right: 24, width: 52, height: 52,
-    background: '#C8A84E', borderRadius: '50%', border: 'none',
+    background: '#FFFFFF', borderRadius: '50%', border: 'none',
     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-    boxShadow: '0 4px 16px rgba(200,168,78,0.4)', zIndex: 950,
+    boxShadow: '0 2px 12px rgba(0,0,0,0.1)', zIndex: 950,
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   panel: {
