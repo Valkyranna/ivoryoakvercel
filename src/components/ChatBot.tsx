@@ -659,8 +659,8 @@ export default function ChatBot() {
             width: 100vw !important;
             left: 0 !important;
             right: 0 !important;
-            bottom: 0 !important;
-            height: calc(100dvh) !important;
+            bottom: 56px !important;
+            height: calc(100dvh - 56px) !important;
             max-height: none !important;
             border-radius: 0 !important;
             border: none !important;
