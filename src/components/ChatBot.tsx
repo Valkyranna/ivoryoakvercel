@@ -544,6 +544,7 @@ export default function ChatBot() {
     <>
       {/* Chat toggle button */}
       <button
+        className="chat-toggle"
         onClick={() => setOpen(!open)}
         style={s.toggle}
         aria-label="Chat"
@@ -645,6 +646,13 @@ export default function ChatBot() {
           animation: messageIn 0.25s ease forwards;
         }
         @media (max-width: 768px) {
+          .chat-toggle {
+            left: 16px !important;
+            right: auto !important;
+            bottom: 88px !important;
+            width: 44px !important;
+            height: 44px !important;
+          }
           .chat-panel {
             width: 100vw !important;
             left: 0 !important;
