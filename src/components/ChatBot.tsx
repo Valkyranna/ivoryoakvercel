@@ -631,6 +631,9 @@ export default function ChatBot() {
               </svg>
             </button>
           </form>
+          <button className="mobile-chat-close" onClick={() => setOpen(false)} style={s.mobileClose}>
+            Close Chat
+          </button>
         </div>
 
       <style>{`
@@ -646,13 +649,6 @@ export default function ChatBot() {
           animation: messageIn 0.25s ease forwards;
         }
         @media (max-width: 768px) {
-          .chat-toggle {
-            left: 16px !important;
-            right: auto !important;
-            bottom: 88px !important;
-            width: 44px !important;
-            height: 44px !important;
-          }
           .chat-panel {
             width: 100vw !important;
             left: 0 !important;
@@ -671,6 +667,9 @@ export default function ChatBot() {
           .chat-panel input[type="text"] {
             font-size: 16px !important;
             padding: 12px 14px !important;
+          }
+          .mobile-chat-close {
+            display: block !important;
           }
         }
       `}</style>
@@ -711,7 +710,7 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem', color: '#8C8279',
   },
   closeBtn: {
-    background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+    background: 'none', border: 'none', cursor: 'pointer', padding: 8,
   },
   messages: {
     flex: 1, overflowY: 'auto', padding: '16px',
@@ -768,5 +767,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 36, height: 36, borderRadius: '50%', background: '#C8A84E',
     border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center',
     justifyContent: 'center', color: '#FFFFFF', flexShrink: 0,
+  },
+  mobileClose: {
+    display: 'none', width: '100%', padding: '10px 0',
+    background: 'transparent', color: '#8C8279',
+    fontSize: '0.78rem', fontWeight: 500, border: 'none',
+    borderTop: '1px solid #EAE2D6', cursor: 'pointer',
+    fontFamily: "'DM Sans', sans-serif",
   },
 }
