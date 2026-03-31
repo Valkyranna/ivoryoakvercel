@@ -671,6 +671,10 @@ export default function ChatBot() {
             {voiceSupported && (
               <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+                if (!SpeechRecognition) {
+                  alert("Speech recognition is not supported in this browser.")
+                  return
+                }
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = false
@@ -681,9 +685,24 @@ export default function ChatBot() {
                   setVoiceActive(false)
                   setTimeout(() => handleSend(text), 300)
                 }
-                recognition.onerror = () => setVoiceActive(false)
+                recognition.onerror = (e: any) => {
+                  setVoiceActive(false)
+                  console.error("Voice error:", e.error)
+                  if (e.error === 'not-allowed') {
+                    alert("Microphone access denied. Please allow permissions in your browser settings.")
+                  } else if (e.error === 'network') {
+                    alert("Network error. Please check your connection.")
+                  } else {
+                    alert(`Voice input error: ${e.error}. Note: Chrome requires HTTPS or localhost.`)
+                  }
+                }
                 recognition.onend = () => setVoiceActive(false)
-                recognition.start()
+                try {
+                  recognition.start()
+                } catch (err) {
+                  setVoiceActive(false)
+                  alert("Failed to start voice input.")
+                }
               }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
