@@ -119,11 +119,13 @@ export default function ChatBot() {
   const [typing, setTyping] = useState(false)
   const [typingMessage, setTypingMessage] = useState('')
   const [voiceActive, setVoiceActive] = useState(false)
-  const [voiceSupported, setVoiceSupported] = useState(() => {
-    return typeof window !== 'undefined' && (
-      'webkitSpeechRecognition' in window || 'SpeechRecognition' in window
-    )
-  })
+  const [voiceSupported, setVoiceSupported] = useState(false)
+  const [voiceError, setVoiceError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    setVoiceSupported(!!SpeechRecognition)
+  }, [])
   const listRef = useRef<HTMLDivElement>(null)
   const inactivityRef = useRef<ReturnType<typeof setTimeout>>(null)
   const [proactiveShown, setProactiveShown] = useState(false)
@@ -661,6 +663,7 @@ export default function ChatBot() {
           </div>
 
           <form onSubmit={e => { e.preventDefault(); handleSend(input) }} style={s.inputArea}>
+            {voiceError && <div style={{ width: '100%', fontSize: '0.7rem', color: '#C44', textAlign: 'center', marginBottom: 4 }}>{voiceError}</div>}
             <input
               type="text"
               value={input}
@@ -670,38 +673,44 @@ export default function ChatBot() {
             />
             {voiceSupported && (
               <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
+                console.log('[Voice] Button clicked')
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+                console.log('[Voice] SpeechRecognition available:', !!SpeechRecognition)
                 if (!SpeechRecognition) {
-                  alert("Speech recognition is not supported in this browser.")
+                  setVoiceError("Speech recognition not supported")
                   return
                 }
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = false
-                recognition.onstart = () => setVoiceActive(true)
+                recognition.continuous = false
+                recognition.onstart = () => {
+                  console.log('[Voice] Recognition started')
+                  setVoiceActive(true)
+                  setVoiceError(null)
+                }
                 recognition.onresult = (e: any) => {
+                  console.log('[Voice] Result:', e.results)
                   const text = e.results[0][0].transcript
                   setInput(text)
                   setVoiceActive(false)
                   setTimeout(() => handleSend(text), 300)
                 }
                 recognition.onerror = (e: any) => {
+                  console.error('[Voice] Error:', e.error)
                   setVoiceActive(false)
-                  console.error("Voice error:", e.error)
-                  if (e.error === 'not-allowed') {
-                    alert("Microphone access denied. Please allow permissions in your browser settings.")
-                  } else if (e.error === 'network') {
-                    alert("Network error. Please check your connection.")
-                  } else {
-                    alert(`Voice input error: ${e.error}. Note: Chrome requires HTTPS or localhost.`)
-                  }
+                  setVoiceError(`Voice error: ${e.error}`)
                 }
-                recognition.onend = () => setVoiceActive(false)
+                recognition.onend = () => {
+                  console.log('[Voice] Recognition ended')
+                  setVoiceActive(false)
+                }
                 try {
                   recognition.start()
+                  console.log('[Voice] recognition.start() called')
                 } catch (err) {
+                  console.error('[Voice] Start failed:', err)
                   setVoiceActive(false)
-                  alert("Failed to start voice input.")
                 }
               }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
