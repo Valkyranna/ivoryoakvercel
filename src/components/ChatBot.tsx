@@ -672,45 +672,39 @@ export default function ChatBot() {
               style={s.chatInput}
             />
             {voiceSupported && (
-              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
-                console.log('[Voice] Button clicked')
+              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={async () => {
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-                console.log('[Voice] SpeechRecognition available:', !!SpeechRecognition)
-                if (!SpeechRecognition) {
-                  setVoiceError("Speech recognition not supported")
-                  return
-                }
+                if (!SpeechRecognition) return
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = false
                 recognition.continuous = false
                 recognition.onstart = () => {
-                  console.log('[Voice] Recognition started')
                   setVoiceActive(true)
                   setVoiceError(null)
                 }
                 recognition.onresult = (e: any) => {
-                  console.log('[Voice] Result:', e.results)
                   const text = e.results[0][0].transcript
                   setInput(text)
                   setVoiceActive(false)
                   setTimeout(() => handleSend(text), 300)
                 }
                 recognition.onerror = (e: any) => {
-                  console.error('[Voice] Error:', e.error)
                   setVoiceActive(false)
-                  setVoiceError(`Voice error: ${e.error}`)
+                  if (e.error === 'not-allowed') {
+                    setVoiceError("Microphone blocked. Click the 🔒 icon in your address bar → Site settings → Microphone → Allow.")
+                  } else {
+                    setVoiceError(`Voice error: ${e.error}`)
+                  }
                 }
-                recognition.onend = () => {
-                  console.log('[Voice] Recognition ended')
-                  setVoiceActive(false)
-                }
+                recognition.onend = () => setVoiceActive(false)
                 try {
+                  // Request mic permission first to force the prompt
+                  await navigator.mediaDevices.getUserMedia({ audio: true })
                   recognition.start()
-                  console.log('[Voice] recognition.start() called')
                 } catch (err) {
-                  console.error('[Voice] Start failed:', err)
                   setVoiceActive(false)
+                  setVoiceError("Microphone access denied. Please allow it in your browser settings.")
                 }
               }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
