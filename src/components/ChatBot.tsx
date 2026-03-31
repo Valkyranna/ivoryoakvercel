@@ -83,6 +83,7 @@ type BookingState = null | 'service' | 'size' | 'address' | 'date' | 'name' | 'p
 
 const CHAT_STORAGE_KEY = 'ivoryoak-chat'
 const CHAT_EXPIRY_MS = 2 * 60 * 60 * 1000 // 2 hours
+const MAX_MESSAGES = 15
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
@@ -93,7 +94,7 @@ export default function ChatBot() {
       if (saved) {
         const { messages: savedMsgs, timestamp } = JSON.parse(saved)
         if (Date.now() - timestamp < CHAT_EXPIRY_MS && savedMsgs.length > 0) {
-          return savedMsgs
+          return savedMsgs.slice(-MAX_MESSAGES)
         }
         localStorage.removeItem(CHAT_STORAGE_KEY)
       }
@@ -108,14 +109,13 @@ export default function ChatBot() {
   const [bookingData, setBookingData] = useState<Record<string, string>>({})
   const [userName, setUserName] = useState('')
   const [typing, setTyping] = useState(false)
-  const [recentTopics, setRecentTopics] = useState<string[]>([])
   const listRef = useRef<HTMLDivElement>(null)
 
-  // Save to localStorage on message change
+  // Save to localStorage on message change (keep last 15)
   useEffect(() => {
     try {
       localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify({
-        messages,
+        messages: messages.slice(-MAX_MESSAGES),
         timestamp: Date.now(),
       }))
     } catch { /* ignore */ }
@@ -480,7 +480,6 @@ export default function ChatBot() {
     if (lower.includes('price') || lower.includes('cost') || lower.includes('how much') || lower.includes('rate')) {
       const result = fuse.search('pricing cost')
       if (result.length > 0) {
-        setRecentTopics(prev => [...prev.slice(-3), 'pricing'])
         addBotMessage(result[0]!.item.a + '\n\n[View full pricing ↓](#pricing)')
         // Scroll to pricing after a delay
         setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }), 2000)
@@ -495,7 +494,6 @@ export default function ChatBot() {
         // Search the follow-up as if it were a full question
         const followResults = fuse.search(followUp)
         if (followResults.length > 0 && followResults[0]!.score! < 0.5) {
-          setRecentTopics(prev => [...prev.slice(-3), followUp])
           addBotMessage(followResults[0]!.item.a)
           return
         }
@@ -506,7 +504,6 @@ export default function ChatBot() {
     const results = fuse.search(lower)
     if (results.length > 0 && results[0]!.score! < 0.5) {
       // Track topic for context
-      setRecentTopics(prev => [...prev.slice(-3), results[0]!.item.q])
       addBotMessage(results[0]!.item.a)
     } else {
       // Handoff to human
