@@ -84,6 +84,14 @@ type BookingState = null | 'service' | 'size' | 'address' | 'date' | 'name' | 'p
 const CHAT_STORAGE_KEY = 'ivoryoak-chat'
 const CHAT_EXPIRY_MS = 2 * 60 * 60 * 1000 // 2 hours
 const MAX_MESSAGES = 15
+const INACTIVITY_MS = 60 * 1000 // 60 seconds
+
+const getGreeting = (): string => {
+  const h = new Date().getHours()
+  if (h < 12) return 'Good morning'
+  if (h < 17) return 'Good afternoon'
+  return 'Good evening'
+}
 
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
@@ -101,7 +109,7 @@ export default function ChatBot() {
     } catch { /* ignore */ }
     return [{
       role: 'bot',
-      text: "Hey there! I'm the Ivory & Oak assistant. Ask me anything about our cleaning services, pricing, or type **\"book a cleaning\"** to get started.",
+      text: `${getGreeting()}! I'm the Ivory & Oak assistant. Ask me anything about our cleaning services, pricing, or type **\"book a cleaning\"** to get started.`,
     }]
   })
   const [input, setInput] = useState('')
@@ -109,7 +117,29 @@ export default function ChatBot() {
   const [bookingData, setBookingData] = useState<Record<string, string>>({})
   const [userName, setUserName] = useState('')
   const [typing, setTyping] = useState(false)
+  const [typingMessage, setTypingMessage] = useState('')
+  const [voiceActive, setVoiceActive] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
+  const inactivityRef = useRef<ReturnType<typeof setTimeout>>(null)
+  const [proactiveShown, setProactiveShown] = useState(false)
+
+  // Reset inactivity timer
+  const resetInactivity = useCallback(() => {
+    if (inactivityRef.current) clearTimeout(inactivityRef.current)
+    setProactiveShown(false)
+    inactivityRef.current = setTimeout(() => {
+      setProactiveShown(true)
+      setTyping(true)
+      setTimeout(() => {
+        setTyping(false)
+        setMessages(prev => [...prev, {
+          role: 'bot',
+          text: "Still there? I can help with booking, pricing, or anything else!",
+          options: ['Book a cleaning', 'View pricing', 'Just browsing'],
+        }])
+      }, 600)
+    }, INACTIVITY_MS)
+  }, [])
 
   // Save to localStorage on message change (keep last 15)
   useEffect(() => {
@@ -374,6 +404,7 @@ export default function ChatBot() {
           return
         }
         setTyping(true)
+        setTypingMessage('Finding your address...')
         fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(text.trim())}&limit=4&viewbox=-84.82,41.98,-80.52,38.40&bounded=1`,
           { headers: { 'Accept-Language': 'en' } }
@@ -381,17 +412,20 @@ export default function ChatBot() {
           .then(r => r.json())
           .then(results => {
             setTyping(false)
+            setTypingMessage('')
             if (results.length > 0) {
               const options = results.map((r: { display_name: string }) => r.display_name)
               addBotMessage('I found these — pick one, or type your full address:', options)
             } else {
-              // No results, accept what they typed
-              handleBookingFlow(text.trim())
+              setTyping(true)
+              setTypingMessage('')
+              addBotMessage("I couldn't find that exact address. Could you share your zip code or nearest cross street?", ['Try a different address', 'Skip for now'])
             }
           })
           .catch(() => {
             setTyping(false)
-            handleBookingFlow(text.trim())
+            setTypingMessage('')
+            addBotMessage("I couldn't find that exact address. Could you share your zip code or nearest cross street?", ['Try a different address', 'Skip for now'])
           })
         return
       }
@@ -612,6 +646,7 @@ export default function ChatBot() {
             {typing && (
               <div style={s.botMsgWrap}>
                 <div style={{ ...s.botMsg, ...s.typing }}>
+                  {typingMessage && <span style={{ marginRight: 6, fontSize: '0.75rem', color: '#8C8279' }}>{typingMessage}</span>}
                   <span style={s.typingDot} />
                   <span style={{ ...s.typingDot, animationDelay: '0.2s' }} />
                   <span style={{ ...s.typingDot, animationDelay: '0.4s' }} />
@@ -628,6 +663,30 @@ export default function ChatBot() {
               placeholder="Type your question..."
               style={s.chatInput}
             />
+            <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
+              if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return
+              const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+              const recognition = new SpeechRecognition()
+              recognition.lang = 'en-US'
+              recognition.interimResults = false
+              recognition.onstart = () => setVoiceActive(true)
+              recognition.onresult = (e: any) => {
+                const text = e.results[0][0].transcript
+                setInput(text)
+                setVoiceActive(false)
+                setTimeout(() => handleSend(text), 300)
+              }
+              recognition.onerror = () => setVoiceActive(false)
+              recognition.onend = () => setVoiceActive(false)
+              recognition.start()
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
             <button type="submit" style={s.sendBtn}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -778,6 +837,15 @@ const s: Record<string, React.CSSProperties> = {
     width: 36, height: 36, borderRadius: '50%', background: '#C8A84E',
     border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center',
     justifyContent: 'center', color: '#FFFFFF', flexShrink: 0,
+  },
+  micBtn: {
+    width: 36, height: 36, borderRadius: '50%', background: 'transparent',
+    border: '1px solid #EAE2D6', cursor: 'pointer', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', color: '#8C8279', flexShrink: 0,
+    transition: 'all 0.2s',
+  },
+  micBtnActive: {
+    background: '#C8A84E', borderColor: '#C8A84E', color: '#FFFFFF',
   },
   mobileClose: {
     display: 'none', width: '100%', padding: '10px 0',
