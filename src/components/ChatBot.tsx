@@ -671,23 +671,55 @@ export default function ChatBot() {
               placeholder="Type your question..."
               style={s.chatInput}
             />
-            <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
-              if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return
-              const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-              const recognition = new SpeechRecognition()
-              recognition.lang = 'en-US'
-              recognition.interimResults = false
-              recognition.onstart = () => setVoiceActive(true)
-              recognition.onresult = (e: any) => {
-                const text = e.results[0][0].transcript
-                setInput(text)
-                setVoiceActive(false)
-                setTimeout(() => handleSend(text), 300)
-              }
-              recognition.onerror = () => setVoiceActive(false)
-              recognition.onend = () => setVoiceActive(false)
-              recognition.start()
-            }}>
+            {voiceSupported && (
+              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+                if (!SpeechRecognition) {
+                  setVoiceError("Voice not supported in this browser.")
+                  return
+                }
+                const recognition = new SpeechRecognition()
+                recognition.lang = 'en-US'
+                recognition.interimResults = false
+                recognition.continuous = false
+                recognition.maxAlternatives = 1
+                recognition.onstart = () => {
+                  setVoiceActive(true)
+                  setVoiceError(null)
+                }
+                recognition.onresult = (e: any) => {
+                  const text = e.results[0][0].transcript
+                  setInput(text)
+                  setVoiceActive(false)
+                  setTimeout(() => handleSend(text), 300)
+                }
+                recognition.onerror = (e: any) => {
+                  setVoiceActive(false)
+                  if (e.error === 'not-allowed') {
+                    setVoiceError("🔒 Mic blocked. Click the lock icon 🔒 in your address bar → Site settings → Microphone → Allow. Then refresh.")
+                  } else if (e.error === 'network') {
+                    setVoiceError("Network error. Check your connection.")
+                  } else if (e.error === 'no-speech') {
+                    setVoiceError("No speech detected. Try again.")
+                  } else {
+                    setVoiceError(`Error: ${e.error}`)
+                  }
+                }
+                recognition.onend = () => setVoiceActive(false)
+                try {
+                  recognition.start()
+                } catch (err: any) {
+                  setVoiceActive(false)
+                  if (err.message?.includes('already started')) {
+                    recognition.stop()
+                    setTimeout(() => recognition.start(), 100)
+                  } else {
+                    setVoiceError("Mic access denied. Check browser settings.")
+                  }
+                }
+              }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
@@ -695,6 +727,7 @@ export default function ChatBot() {
                 <line x1="8" y1="23" x2="16" y2="23"/>
               </svg>
             </button>
+            )}
             <button type="submit" style={s.sendBtn}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
