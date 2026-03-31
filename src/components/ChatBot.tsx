@@ -119,7 +119,14 @@ export default function ChatBot() {
   const [typing, setTyping] = useState(false)
   const [typingMessage, setTypingMessage] = useState('')
   const [voiceActive, setVoiceActive] = useState(false)
+  const [voiceSupported, setVoiceSupported] = useState(false)
+  const [voiceError, setVoiceError] = useState<string | null>(null)
   const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    setVoiceSupported(!!SpeechRecognition)
+  }, [])
   const inactivityRef = useRef<ReturnType<typeof setTimeout>>(null)
   const [proactiveShown, setProactiveShown] = useState(false)
 
@@ -656,6 +663,7 @@ export default function ChatBot() {
           </div>
 
           <form onSubmit={e => { e.preventDefault(); handleSend(input) }} style={s.inputArea}>
+            {voiceError && <div style={{ width: '100%', fontSize: '0.7rem', color: '#C44', textAlign: 'center', marginBottom: 4 }}>{voiceError}</div>}
             <input
               type="text"
               value={input}
