@@ -672,7 +672,7 @@ export default function ChatBot() {
               style={s.chatInput}
             />
             {voiceSupported && (
-              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={async () => {
+              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={() => {
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
                 if (!SpeechRecognition) return
                 const recognition = new SpeechRecognition()
@@ -699,8 +699,6 @@ export default function ChatBot() {
                 }
                 recognition.onend = () => setVoiceActive(false)
                 try {
-                  // Request mic permission first to force the prompt
-                  await navigator.mediaDevices.getUserMedia({ audio: true })
                   recognition.start()
                 } catch (err) {
                   setVoiceActive(false)
