@@ -672,30 +672,48 @@ export default function ChatBot() {
               style={s.chatInput}
             />
             {voiceSupported && (
-              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={async (e) => {
+              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
                 if (!SpeechRecognition) return
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
-                recognition.interimResults = false
+                recognition.interimResults = true
                 recognition.continuous = false
+                recognition.maxAlternatives = 1
+                let finalTranscript = ''
                 recognition.onstart = () => {
                   setVoiceActive(true)
                   setVoiceError(null)
                 }
                 recognition.onresult = (e: any) => {
-                  const text = e.results[0][0].transcript
-                  setInput(text)
-                  setVoiceActive(false)
-                  setTimeout(() => handleSend(text), 300)
+                  let interim = ''
+                  for (let i = e.resultIndex; i < e.results.length; i++) {
+                    const transcript = e.results[i][0].transcript
+                    if (e.results[i].isFinal) {
+                      finalTranscript += transcript
+                    } else {
+                      interim += transcript
+                    }
+                  }
+                  if (finalTranscript) {
+                    setInput(finalTranscript.trim())
+                    setVoiceActive(false)
+                    setTimeout(() => handleSend(finalTranscript.trim()), 300)
+                  } else if (interim) {
+                    setInput(interim.trim())
+                  }
                 }
                 recognition.onerror = () => setVoiceActive(false)
-                recognition.onend = () => setVoiceActive(false)
+                recognition.onend = () => {
+                  setVoiceActive(false)
+                  if (finalTranscript) {
+                    setInput(finalTranscript.trim())
+                    setTimeout(() => handleSend(finalTranscript.trim()), 300)
+                  }
+                }
                 try {
-                  // Explicitly request mic permission to trigger browser prompt
-                  await navigator.mediaDevices.getUserMedia({ audio: true })
                   recognition.start()
                 } catch {
                   setVoiceActive(false)
