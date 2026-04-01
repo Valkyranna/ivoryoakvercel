@@ -676,22 +676,11 @@ export default function ChatBot() {
                 e.preventDefault()
                 e.stopPropagation()
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-                if (!SpeechRecognition) {
-                  setVoiceError("Voice not supported in this browser.")
-                  return
-                }
-                try {
-                  // Explicitly request mic permission first
-                  await navigator.mediaDevices.getUserMedia({ audio: true })
-                } catch (err) {
-                  setVoiceError("Microphone access required. Click the 🔒 icon in your address bar → Site settings → Microphone → Allow.")
-                  return
-                }
+                if (!SpeechRecognition) return
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = false
                 recognition.continuous = false
-                recognition.maxAlternatives = 1
                 recognition.onstart = () => {
                   setVoiceActive(true)
                   setVoiceError(null)
@@ -705,26 +694,18 @@ export default function ChatBot() {
                 recognition.onerror = (e: any) => {
                   setVoiceActive(false)
                   if (e.error === 'not-allowed') {
-                    setVoiceError("🔒 Mic blocked. Click the lock icon in your address bar → Site settings → Microphone → Allow. Then refresh.")
+                    setVoiceError("Allow microphone access in your browser settings.")
                   } else if (e.error === 'network') {
-                    setVoiceError("Network error. Check your connection.")
+                    setVoiceError("Network error.")
                   } else if (e.error === 'no-speech') {
-                    setVoiceError("No speech detected. Try again.")
-                  } else {
-                    setVoiceError(`Error: ${e.error}`)
+                    setVoiceError("No speech detected.")
                   }
                 }
                 recognition.onend = () => setVoiceActive(false)
                 try {
                   recognition.start()
-                } catch (err: any) {
+                } catch {
                   setVoiceActive(false)
-                  if (err.message?.includes('already started')) {
-                    recognition.stop()
-                    setTimeout(() => recognition.start(), 100)
-                  } else {
-                    setVoiceError("Mic access denied. Check browser settings.")
-                  }
                 }
               }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
