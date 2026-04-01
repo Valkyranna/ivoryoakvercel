@@ -680,42 +680,57 @@ export default function ChatBot() {
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = true
-                recognition.continuous = false
+                recognition.continuous = true
                 recognition.maxAlternatives = 1
                 let finalTranscript = ''
+                let isListening = true
                 recognition.onstart = () => {
+                  console.log('[Voice] Started listening')
                   setVoiceActive(true)
                   setVoiceError(null)
                 }
                 recognition.onresult = (e: any) => {
+                  console.log('[Voice] Result received:', e.results)
                   let interim = ''
                   for (let i = e.resultIndex; i < e.results.length; i++) {
                     const transcript = e.results[i][0].transcript
                     if (e.results[i].isFinal) {
                       finalTranscript += transcript
+                      console.log('[Voice] Final transcript:', finalTranscript)
                     } else {
                       interim += transcript
+                      console.log('[Voice] Interim:', interim)
                     }
                   }
-                  if (finalTranscript) {
+                  if (interim) {
+                    setInput(interim.trim())
+                  }
+                  if (finalTranscript.trim().length > 2) {
+                    isListening = false
+                    recognition.stop()
                     setInput(finalTranscript.trim())
                     setVoiceActive(false)
                     setTimeout(() => handleSend(finalTranscript.trim()), 300)
-                  } else if (interim) {
-                    setInput(interim.trim())
                   }
                 }
-                recognition.onerror = () => setVoiceActive(false)
-                recognition.onend = () => {
+                recognition.onerror = (e: any) => {
+                  console.error('[Voice] Error:', e.error)
                   setVoiceActive(false)
-                  if (finalTranscript) {
+                  isListening = false
+                }
+                recognition.onend = () => {
+                  console.log('[Voice] Ended, final:', finalTranscript)
+                  setVoiceActive(false)
+                  if (isListening && finalTranscript.trim().length > 0) {
                     setInput(finalTranscript.trim())
                     setTimeout(() => handleSend(finalTranscript.trim()), 300)
                   }
                 }
                 try {
                   recognition.start()
-                } catch {
+                  console.log('[Voice] recognition.start() called')
+                } catch (err: any) {
+                  console.error('[Voice] Start failed:', err)
                   setVoiceActive(false)
                 }
               }}>
