@@ -694,6 +694,8 @@ export default function ChatBot() {
                 recognition.onerror = () => setVoiceActive(false)
                 recognition.onend = () => setVoiceActive(false)
                 try {
+                  // Explicitly request mic permission to trigger browser prompt
+                  await navigator.mediaDevices.getUserMedia({ audio: true })
                   recognition.start()
                 } catch {
                   setVoiceActive(false)
