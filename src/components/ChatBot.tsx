@@ -672,12 +672,19 @@ export default function ChatBot() {
               style={s.chatInput}
             />
             {voiceSupported && (
-              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={(e) => {
+              <button type="button" style={{ ...s.micBtn, ...(voiceActive ? s.micBtnActive : {}) }} onClick={async (e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
                 if (!SpeechRecognition) {
                   setVoiceError("Voice not supported in this browser.")
+                  return
+                }
+                try {
+                  // Explicitly request mic permission first
+                  await navigator.mediaDevices.getUserMedia({ audio: true })
+                } catch (err) {
+                  setVoiceError("Microphone access required. Click the 🔒 icon in your address bar → Site settings → Microphone → Allow.")
                   return
                 }
                 const recognition = new SpeechRecognition()
@@ -698,7 +705,7 @@ export default function ChatBot() {
                 recognition.onerror = (e: any) => {
                   setVoiceActive(false)
                   if (e.error === 'not-allowed') {
-                    setVoiceError("🔒 Mic blocked. Click the lock icon 🔒 in your address bar → Site settings → Microphone → Allow. Then refresh.")
+                    setVoiceError("🔒 Mic blocked. Click the lock icon in your address bar → Site settings → Microphone → Allow. Then refresh.")
                   } else if (e.error === 'network') {
                     setVoiceError("Network error. Check your connection.")
                   } else if (e.error === 'no-speech') {
