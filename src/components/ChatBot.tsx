@@ -691,16 +691,7 @@ export default function ChatBot() {
                   setVoiceActive(false)
                   setTimeout(() => handleSend(text), 300)
                 }
-                recognition.onerror = (e: any) => {
-                  setVoiceActive(false)
-                  if (e.error === 'not-allowed') {
-                    setVoiceError("Allow microphone access in your browser settings.")
-                  } else if (e.error === 'network') {
-                    setVoiceError("Network error.")
-                  } else if (e.error === 'no-speech') {
-                    setVoiceError("No speech detected.")
-                  }
-                }
+                recognition.onerror = () => setVoiceActive(false)
                 recognition.onend = () => setVoiceActive(false)
                 try {
                   recognition.start()
