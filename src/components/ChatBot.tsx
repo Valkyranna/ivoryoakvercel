@@ -79,6 +79,36 @@ const greetings = ['hi', 'hello', 'hey', 'howdy', 'good morning', 'good afternoo
 
 const bookingKeywords = ['book', 'schedule', 'appointment', 'reserve', 'sign up', 'get started', 'want to book', 'need a clean']
 
+// Common speech recognition misrecognitions for cleaning context
+const VOICE_CORRECTIONS: Record<string, string> = {
+  'deep queen': 'deep clean',
+  'deep clean': 'deep clean',
+  'recurring clean': 'recurring clean',
+  'recurring cleaning': 'recurring cleaning',
+  'move in move out': 'move-in / move-out',
+  'move in': 'move-in',
+  'move out': 'move-out',
+  'ivory oak': 'Ivory & Oak',
+  'ivory and oak': 'Ivory & Oak',
+  'cincinnati': 'Cincinnati',
+  'ohio': 'Ohio',
+}
+
+const postProcessVoice = (text: string): string => {
+  let result = text.trim()
+  // Apply corrections
+  for (const [wrong, right] of Object.entries(VOICE_CORRECTIONS)) {
+    result = result.replace(new RegExp(wrong, 'gi'), right)
+  }
+  // Capitalize first letter
+  result = result.charAt(0).toUpperCase() + result.slice(1)
+  // Add period if no ending punctuation
+  if (!/[.!?]$/.test(result)) {
+    result += '.'
+  }
+  return result
+}
+
 type BookingState = null | 'service' | 'size' | 'address' | 'date' | 'name' | 'phone' | 'email' | 'confirm'
 
 const CHAT_STORAGE_KEY = 'ivoryoak-chat'
@@ -677,6 +707,7 @@ export default function ChatBot() {
                 e.stopPropagation()
                 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
                 if (!SpeechRecognition) return
+
                 const recognition = new SpeechRecognition()
                 recognition.lang = 'en-US'
                 recognition.interimResults = true
@@ -684,15 +715,21 @@ export default function ChatBot() {
                 recognition.maxAlternatives = 1
                 let finalTranscript = ''
                 let isListening = true
+                let retryCount = 0
+                const MAX_RETRIES = 2
+
                 recognition.onstart = () => {
                   setVoiceActive(true)
                   setVoiceError(null)
                 }
-                recognition.onresult = (e: any) => {
+                recognition.onresult = (ev: any) => {
                   let interim = ''
-                  for (let i = e.resultIndex; i < e.results.length; i++) {
-                    const transcript = e.results[i][0].transcript
-                    if (e.results[i].isFinal) {
+                  for (let i = ev.resultIndex; i < ev.results.length; i++) {
+                    const transcript = ev.results[i][0].transcript
+                    const confidence = ev.results[i][0].confidence
+                    // Filter out low-confidence results (likely noise)
+                    if (confidence < 0.5) continue
+                    if (ev.results[i].isFinal) {
                       finalTranscript += transcript
                     } else {
                       interim += transcript
@@ -703,21 +740,40 @@ export default function ChatBot() {
                   }
                   if (finalTranscript.trim().length > 2) {
                     isListening = false
+                    retryCount = 0
                     recognition.stop()
-                    setInput(finalTranscript.trim())
+                    const processed = postProcessVoice(finalTranscript)
+                    setInput(processed)
                     setVoiceActive(false)
-                    setTimeout(() => handleSend(finalTranscript.trim()), 300)
+                    setTimeout(() => handleSend(processed), 300)
                   }
                 }
-                recognition.onerror = () => {
+                recognition.onerror = (ev: any) => {
+                  // Retry on no-speech or network errors
+                  if ((ev.error === 'no-speech' || ev.error === 'network') && retryCount < MAX_RETRIES) {
+                    retryCount++
+                    return
+                  }
                   setVoiceActive(false)
                   isListening = false
                 }
                 recognition.onend = () => {
+                  // Auto-restart if still listening and no meaningful text yet
+                  if (isListening && finalTranscript.trim().length === 0 && retryCount < MAX_RETRIES) {
+                    retryCount++
+                    try {
+                      recognition.start()
+                    } catch {
+                      setVoiceActive(false)
+                      isListening = false
+                    }
+                    return
+                  }
                   setVoiceActive(false)
                   if (isListening && finalTranscript.trim().length > 0) {
-                    setInput(finalTranscript.trim())
-                    setTimeout(() => handleSend(finalTranscript.trim()), 300)
+                    const processed = postProcessVoice(finalTranscript)
+                    setInput(processed)
+                    setTimeout(() => handleSend(processed), 300)
                   }
                 }
                 try {
