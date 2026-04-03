@@ -304,11 +304,11 @@ const s: Record<string, React.CSSProperties> = {
   right: {
     flex: '0 0 440px', minHeight: '85vh', background: '#FFFFFF',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    padding: '32px', boxShadow: '-4px 0 30px rgba(0,0,0,0.06)',
+    padding: '20px 32px', boxShadow: '-4px 0 30px rgba(0,0,0,0.06)',
     overflowY: 'auto' as const,
   },
   form: {
-    width: '100%', maxWidth: 380, marginTop: -8,
+    width: '100%', maxWidth: 380, marginTop: -16,
   },
   formTitle: {
     fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.6rem',
@@ -369,7 +369,7 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%', padding: '13px 0', background: '#6B5744', color: '#FAF7F2',
     fontSize: '0.88rem', fontWeight: 600, borderRadius: 4, border: 'none',
     cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
-    letterSpacing: '0.03em', transition: 'background 0.2s', marginTop: 4,
+    letterSpacing: '0.03em', transition: 'background 0.2s', marginTop: 4, marginBottom: -4,
   },
   formNote: {
     textAlign: 'center' as const, fontFamily: "'DM Sans', sans-serif",
