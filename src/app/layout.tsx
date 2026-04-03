@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import 'leaflet/dist/leaflet.css'
 import MobileCTA from '@/components/MobileCTA'
 import GrainOverlay from '@/components/GrainOverlay'
 import ScrollToTop from '@/components/ScrollToTop'
@@ -37,7 +36,7 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Fraunces:ital,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=DM+Sans:wght@400;500;600&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Fraunces:wght@300;400;500&family=DM+Sans:wght@400;500;600&display=swap" />
         <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
       </head>

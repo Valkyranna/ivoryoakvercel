@@ -708,6 +708,8 @@ export default function ChatBot() {
             {voiceError && <div style={{ width: '100%', fontSize: '0.7rem', color: '#C44', textAlign: 'center', marginBottom: 4 }}>{voiceError}</div>}
             <input
               type="text"
+              id="chat-input"
+              name="chat-input"
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Type your question..."
