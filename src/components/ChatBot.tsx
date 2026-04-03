@@ -152,6 +152,19 @@ export default function ChatBot() {
   const [voiceSupported, setVoiceSupported] = useState(false)
   const [voiceError, setVoiceError] = useState<string | null>(null)
   const listRef = useRef<HTMLDivElement>(null)
+  const chatRef = useRef<HTMLDivElement>(null)
+
+  // Close chat when clicking outside
+  useEffect(() => {
+    if (!open) return
+    const handleClick = (e: MouseEvent) => {
+      if (chatRef.current && !chatRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [open])
 
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -635,7 +648,7 @@ export default function ChatBot() {
       </button>
 
       {/* Chat panel */}
-      <div className="chat-panel" style={{
+      <div ref={chatRef} className="chat-panel" style={{
         ...s.panel,
         opacity: open ? 1 : 0,
         transform: open ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
@@ -647,7 +660,6 @@ export default function ChatBot() {
               <div style={s.headerDot} />
               <div>
                 <div style={s.headerName}>Ivory & Oak</div>
-                <div style={s.headerStatus}>Online — typically replies instantly</div>
               </div>
             </div>
             <button onClick={() => setOpen(false)} style={s.closeBtn}>
