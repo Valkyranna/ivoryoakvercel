@@ -191,7 +191,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 2,
   },
   linksWrap: {
-    display: 'flex', alignItems: 'center', gap: 6,
+    display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto',
   },
   link: {
     position: 'relative', fontSize: '0.8rem', fontWeight: 500,
