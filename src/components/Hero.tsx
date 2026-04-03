@@ -253,6 +253,7 @@ const s: Record<string, React.CSSProperties> = {
   bgVideo: {
     position: 'absolute', inset: 0,
     width: '100%', height: '100%', objectFit: 'cover' as const,
+    transform: 'scale(1.02)',
   },
   bgStatic: {
     position: 'absolute', inset: 0,
