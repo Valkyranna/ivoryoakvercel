@@ -274,6 +274,8 @@ const s: Record<string, React.CSSProperties> = {
     fontFamily: "'Fraunces', Georgia, serif", fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
     fontWeight: 300, color: '#FAF7F2', lineHeight: 1.08, marginBottom: 24, letterSpacing: '-0.02em',
     fontOpticalSizing: 'auto',
+    willChange: 'opacity',
+    opacity: 1,
   },
   sub: {
     fontFamily: "'DM Sans', sans-serif", fontSize: '1.05rem', color: 'rgba(250,247,242,0.75)',
