@@ -123,7 +123,7 @@ export default function BeforeAfter() {
 
 const s: Record<string, React.CSSProperties> = {
   section: {
-    padding: '48px 0 80px',
+    padding: '24px 0 80px',
   },
   narrow: {
     maxWidth: 1100, margin: '0 auto', padding: '0 32px',
