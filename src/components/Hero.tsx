@@ -69,8 +69,8 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
           preload="auto"
           poster="/hero-poster.jpg"
           style={s.bgVideo}
+          suppressHydrationWarning
         >
-          <source media="(max-width: 768px)" src="/hero-video-480p.webm" type="video/webm" />
           <source src="/hero-video.webm" type="video/webm" />
         </video>
         <div style={s.overlay} />
