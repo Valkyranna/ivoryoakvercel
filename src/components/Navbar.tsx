@@ -148,12 +148,10 @@ export default function Navbar() {
       )}
 
       <style>{`
-        @media (min-width: 769px) {
-          .nav-hamburger { display: none !important; }
-        }
         @media (max-width: 768px) {
           .nav-links-wrap { display: none !important; }
           .nav-hamburger { display: flex !important; }
+          .nav-links-wrap { margin-left: 0 !important; }
         }
       `}</style>
     </>
@@ -167,7 +165,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   inner: {
     maxWidth: 1200, margin: '0 auto', padding: '0 40px',
-    height: 60, display: 'flex', alignItems: 'center',
+    height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
   },
   logo: {
     display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none',
