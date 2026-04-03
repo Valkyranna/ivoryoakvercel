@@ -167,7 +167,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   inner: {
     maxWidth: 1200, margin: '0 auto', padding: '0 40px',
-    height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    height: 60, display: 'flex', alignItems: 'center',
   },
   logo: {
     display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none',
