@@ -123,14 +123,14 @@ export default function BeforeAfter() {
 
 const s: Record<string, React.CSSProperties> = {
   section: {
-    padding: '80px 0',
+    padding: '48px 0 80px',
   },
   narrow: {
     maxWidth: 1100, margin: '0 auto', padding: '0 32px',
   },
   header: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
-    flexWrap: 'wrap' as const, gap: 20, marginBottom: 32,
+    flexWrap: 'wrap' as const, gap: 20, marginBottom: 24,
   },
   eyebrow: {
     fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', fontWeight: 600,

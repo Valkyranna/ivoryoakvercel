@@ -188,8 +188,6 @@ export default function Content({ onAddressSelect, currentAddress }: Props) {
         </div>
       </section>
 
-      <div style={st.divider} />
-
       <BeforeAfter />
 
       <div style={st.divider} />
@@ -420,7 +418,7 @@ const st: Record<string, React.CSSProperties> = {
     letterSpacing: '0.02em', marginTop: 'auto',
   },
   pricingFooter: {
-    marginTop: 20, paddingTop: 20,
+    marginTop: 12, paddingTop: 12,
     display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' as const,
     gap: 8,
   },
