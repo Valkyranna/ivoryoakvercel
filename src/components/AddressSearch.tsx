@@ -146,7 +146,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   input: {
     flex: 1, border: 'none', background: 'transparent', outline: 'none',
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.88rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.88rem',
     color: '#3E2E20',
   },
   spinner: {
@@ -166,7 +166,7 @@ const s: Record<string, React.CSSProperties> = {
     transition: 'background 0.15s',
   },
   resultText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem',
     color: '#3E2E20', lineHeight: 1.4,
   },
   noResults: {
@@ -176,7 +176,7 @@ const s: Record<string, React.CSSProperties> = {
     boxShadow: '0 8px 24px rgba(0,0,0,0.08)', zIndex: 2000,
   },
   noResultsText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem',
     color: '#8C8279', fontStyle: 'italic',
   },
   sent: {
@@ -185,7 +185,7 @@ const s: Record<string, React.CSSProperties> = {
     background: 'rgba(90,122,90,0.06)', borderRadius: 4,
   },
   sentText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     color: '#5A7A5A', fontWeight: 500,
   },
 }

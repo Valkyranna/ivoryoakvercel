@@ -36,11 +36,11 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex', alignItems: 'center', gap: 10,
   },
   brandText: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '1rem',
     fontWeight: 600, color: '#3E2E20',
   },
   tagline: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '0.9rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '0.9rem',
     fontStyle: 'italic', color: '#C8A84E',
   },
   divider: {
@@ -52,6 +52,6 @@ const s: Record<string, React.CSSProperties> = {
     flexWrap: 'wrap' as const, gap: 12,
   },
   copy: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.75rem', color: '#8C8279',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.75rem', color: '#8C8279',
   },
 }

@@ -7,12 +7,12 @@ import Reveal from './Reveal'
 
 const BeforeAfter = dynamic(() => import('./BeforeAfter'), {
   ssr: false,
-  loading: () => <div style={{ width: '100%', height: 480, background: '#F3EDE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem', color: '#8C8279' }}>Loading...</span></div>,
+  loading: () => <div style={{ width: '100%', height: 480, background: '#F3EDE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.85rem', color: '#8C8279' }}>Loading...</span></div>,
 })
 
 const InteractiveMap = dynamic(() => import('./InteractiveMap'), {
   ssr: false,
-  loading: () => <div style={{ width: '100%', height: '100%', background: '#F3EDE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem', color: '#8C8279' }}>Loading map...</span></div>,
+  loading: () => <div style={{ width: '100%', height: '100%', background: '#F3EDE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.85rem', color: '#8C8279' }}>Loading map...</span></div>,
 })
 
 interface SearchResult {
@@ -294,12 +294,12 @@ const st: Record<string, React.CSSProperties> = {
     maxWidth: 1100, margin: '0 auto', padding: '0 32px',
   },
   eyebrow: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.7rem', fontWeight: 600,
     letterSpacing: '0.18em', textTransform: 'uppercase' as const,
     color: '#C8A84E', marginBottom: 12,
   },
   heading: {
-    fontFamily: "'Fraunces', Georgia, serif",
+    fontFamily: "var(--font-fraunces), Georgia, serif",
     fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', fontWeight: 400,
     color: '#3E2E20', lineHeight: 1.15, marginBottom: 16,
   },
@@ -316,15 +316,15 @@ const st: Record<string, React.CSSProperties> = {
   },
   serviceItem: {},
   serviceTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '1.25rem',
     fontWeight: 600, color: '#3E2E20', marginBottom: 12,
   },
   serviceDesc: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.88rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.88rem',
     color: '#5C534A', lineHeight: 1.7, marginBottom: 16,
   },
   serviceLink: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.8rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.8rem', fontWeight: 600,
     color: '#6B5744', background: 'none', border: 'none', cursor: 'pointer',
     padding: 0, transition: 'color 0.2s', letterSpacing: '0.02em',
   },
@@ -335,7 +335,7 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex', alignItems: 'center', gap: 10,
   },
   featureText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem',
     fontWeight: 500, color: '#5C534A',
   },
   pricingSection: {
@@ -363,21 +363,21 @@ const st: Record<string, React.CSSProperties> = {
     height: 2, background: '#C8A84E',
   },
   planRecommended: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.6rem', fontWeight: 700,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.6rem', fontWeight: 700,
     letterSpacing: '0.16em', textTransform: 'uppercase' as const,
     color: '#C8A84E', marginBottom: 14,
   },
   planLabel: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.66rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.66rem', fontWeight: 600,
     letterSpacing: '0.12em', textTransform: 'uppercase' as const,
     color: '#8C8279', marginBottom: 8,
   },
   planName: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '1.5rem',
     fontWeight: 500, color: '#3E2E20', marginBottom: 10, lineHeight: 1.15,
   },
   planDesc: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '0.88rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '0.88rem',
     fontStyle: 'italic', color: '#5C534A', lineHeight: 1.6,
     marginBottom: 28,
   },
@@ -385,15 +385,15 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex', alignItems: 'flex-start', gap: 2, marginBottom: 2,
   },
   planDollar: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.95rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.95rem', fontWeight: 600,
     color: '#3E2E20', marginTop: 8,
   },
   planPrice: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '3rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '3rem',
     fontWeight: 400, color: '#3E2E20', lineHeight: 1, letterSpacing: '-0.02em',
   },
   planUnit: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.72rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.72rem',
     color: '#8C8279', marginBottom: 18,
   },
   planLine: {
@@ -405,14 +405,14 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex', flexDirection: 'column', gap: 8,
   },
   planFeature: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     color: '#5C534A', display: 'flex', alignItems: 'center', gap: 8,
   },
   featureCheck: {
     color: '#C8A84E', fontSize: '0.55rem',
   },
   planBtn: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem', fontWeight: 600,
     color: '#6B5744', background: 'none', border: 'none', cursor: 'pointer',
     padding: 0, textAlign: 'left' as const, transition: 'color 0.2s',
     letterSpacing: '0.02em', marginTop: 'auto',
@@ -423,14 +423,14 @@ const st: Record<string, React.CSSProperties> = {
     gap: 8,
   },
   priceNote: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     color: '#8C8279',
   },
   testimonial: {
     textAlign: 'center' as const, maxWidth: 640, margin: '0 auto',
   },
   quote: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: 'clamp(1.1rem, 2.2vw, 1.5rem)',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 'clamp(1.1rem, 2.2vw, 1.5rem)',
     fontWeight: 400, fontStyle: 'italic', color: '#3E2E20', lineHeight: 1.6,
     margin: '20px 0',
   },
@@ -438,11 +438,11 @@ const st: Record<string, React.CSSProperties> = {
     display: 'flex', flexDirection: 'column', gap: 2,
   },
   quoteName: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.85rem',
     fontWeight: 600, color: '#3E2E20',
   },
   quoteLoc: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem', color: '#8C8279',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem', color: '#8C8279',
   },
   mapSection: {
     paddingBottom: 0,
@@ -460,7 +460,7 @@ const st: Record<string, React.CSSProperties> = {
   },
   inlineItem: {
     display: 'flex', alignItems: 'center', gap: 6,
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem',
     color: '#5C534A', textDecoration: 'none', fontWeight: 500,
   },
   inlineDot: {
@@ -477,12 +477,12 @@ const st: Record<string, React.CSSProperties> = {
     borderRadius: 6,
   },
   selectedLabel: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.65rem', fontWeight: 700,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.65rem', fontWeight: 700,
     letterSpacing: '0.12em', textTransform: 'uppercase' as const,
     color: '#5A7A5A', marginBottom: 2,
   },
   selectedAddr: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem',
     color: '#3E2E20', fontWeight: 500, lineHeight: 1.4,
   },
   mapStrip: {
@@ -493,7 +493,7 @@ const st: Record<string, React.CSSProperties> = {
     padding: '10px 16px',
     background: 'rgba(200,168,78,0.04)', borderBottom: '1px solid #EAE2D6',
     borderTop: '1px solid #EAE2D6',
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     fontWeight: 500, color: '#8C8279',
   },
   mapFull: {

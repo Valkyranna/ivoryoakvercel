@@ -133,17 +133,17 @@ const s: Record<string, React.CSSProperties> = {
     flexWrap: 'wrap' as const, gap: 20, marginBottom: 24,
   },
   eyebrow: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.7rem', fontWeight: 600,
     letterSpacing: '0.18em', textTransform: 'uppercase' as const,
     color: '#C8A84E', marginBottom: 12,
   },
   heading: {
-    fontFamily: "'Fraunces', Georgia, serif",
+    fontFamily: "var(--font-fraunces), Georgia, serif",
     fontSize: 'clamp(1.8rem, 3.5vw, 2.6rem)', fontWeight: 400,
     color: '#3E2E20', lineHeight: 1.15, marginBottom: 0,
   },
   body: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.9rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.9rem',
     color: '#8C8279', margin: 0,
   },
   tabs: {
@@ -151,7 +151,7 @@ const s: Record<string, React.CSSProperties> = {
     borderBottom: '1px solid #EAE2D6',
   },
   tab: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.8rem', fontWeight: 600,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.8rem', fontWeight: 600,
     letterSpacing: '0.04em', padding: '12px 24px',
     background: 'none', border: 'none', cursor: 'pointer',
     transition: 'all 0.2s',
@@ -183,7 +183,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   imageLabel: {
     position: 'absolute' as const, bottom: 16,
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', fontWeight: 700,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.7rem', fontWeight: 700,
     letterSpacing: '0.14em', textTransform: 'uppercase' as const,
     color: '#FFFFFF', background: 'rgba(0,0,0,0.45)',
     padding: '4px 12px', borderRadius: 4, zIndex: 5,

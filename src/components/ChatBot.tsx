@@ -890,11 +890,11 @@ const s: Record<string, React.CSSProperties> = {
     width: 8, height: 8, borderRadius: '50%', background: '#5A7A5A',
   },
   headerName: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '0.95rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '0.95rem',
     fontWeight: 600, color: '#3E2E20',
   },
   headerStatus: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem', color: '#8C8279',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.68rem', color: '#8C8279',
   },
   closeBtn: {
     background: 'none', border: 'none', cursor: 'pointer', padding: 8,
@@ -913,12 +913,12 @@ const s: Record<string, React.CSSProperties> = {
   },
   botMsg: {
     padding: '10px 14px', background: '#F3EDE4', borderRadius: '12px 12px 12px 4px',
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem', color: '#3E2E20',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem', color: '#3E2E20',
     lineHeight: 1.6,
   },
   userMsg: {
     padding: '10px 14px', background: '#6B5744', borderRadius: '12px 12px 4px 12px',
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.82rem', color: '#FAF7F2',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.82rem', color: '#FAF7F2',
     lineHeight: 1.6,
   },
   msgLine: {
@@ -929,7 +929,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   optionBtn: {
     padding: '8px 14px', background: '#FFFFFF', border: '1px solid #EAE2D6',
-    borderRadius: 100, fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    borderRadius: 100, fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     fontWeight: 500, color: '#6B5744', cursor: 'pointer', transition: 'all 0.15s',
     minHeight: 36,
   },
@@ -947,7 +947,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   chatInput: {
     flex: 1, background: '#FFFFFF', borderRadius: 8,
-    padding: '10px 12px', fontSize: '0.82rem', fontFamily: "'DM Sans', sans-serif",
+    padding: '10px 12px', fontSize: '0.82rem', fontFamily: "var(--font-dm-sans), sans-serif",
     color: '#3E2E20', outline: 'none', border: '1px solid #EAE2D6',
   },
   sendBtn: {
@@ -969,6 +969,6 @@ const s: Record<string, React.CSSProperties> = {
     background: 'transparent', color: '#8C8279',
     fontSize: '0.78rem', fontWeight: 500, border: 'none',
     borderTop: '1px solid #EAE2D6', cursor: 'pointer',
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "var(--font-dm-sans), sans-serif",
   },
 }

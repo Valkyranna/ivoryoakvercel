@@ -252,12 +252,12 @@ const s: Record<string, React.CSSProperties> = {
     position: 'relative', zIndex: 2, padding: '120px 60px 80px', maxWidth: 560,
   },
   heading: {
-    fontFamily: "'Fraunces', Georgia, serif", fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
+    fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
     fontWeight: 300, color: '#FAF7F2', lineHeight: 1.08, marginBottom: 24, letterSpacing: '-0.02em',
     fontOpticalSizing: 'auto',
   },
   sub: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '1.05rem', color: 'rgba(250,247,242,0.75)',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '1.05rem', color: 'rgba(250,247,242,0.75)',
     lineHeight: 1.7, marginBottom: 32, maxWidth: 440,
   },
   right: {
@@ -270,7 +270,7 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%', maxWidth: 380, marginTop: -16,
   },
   formTitle: {
-    fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.6rem',
+    fontFamily: "var(--font-fraunces), Georgia, serif", fontSize: '1.6rem',
     fontWeight: 500, color: '#3E2E20', marginBottom: 4,
   },
   formGroup: {
@@ -280,12 +280,12 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.06em',
     textTransform: 'uppercase' as const, color: '#5C534A',
     marginBottom: 6, display: 'block',
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "var(--font-dm-sans), sans-serif",
   },
   input: {
     width: '100%', padding: '10px 12px', background: '#FAF7F2',
     border: '1px solid #EAE2D6', borderRadius: 4, fontSize: '0.85rem',
-    color: '#2A2420', fontFamily: "'DM Sans', sans-serif",
+    color: '#2A2420', fontFamily: "var(--font-dm-sans), sans-serif",
     transition: 'border-color 0.2s',
   },
   formRow: {
@@ -298,10 +298,10 @@ const s: Record<string, React.CSSProperties> = {
   },
   addressInput: {
     flex: 1, border: 'none', background: 'transparent', outline: 'none',
-    fontSize: '0.85rem', color: '#2A2420', fontFamily: "'DM Sans', sans-serif",
+    fontSize: '0.85rem', color: '#2A2420', fontFamily: "var(--font-dm-sans), sans-serif",
   },
   addressHint: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.7rem',
     color: '#C8A84E', marginTop: 4, display: 'block',
   },
   addrDropdown: {
@@ -317,30 +317,30 @@ const s: Record<string, React.CSSProperties> = {
     transition: 'background 0.15s',
   },
   addrResultText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem',
     color: '#3E2E20', lineHeight: 1.4,
   },
   submit: {
     width: '100%', padding: '13px 0', background: '#6B5744', color: '#FAF7F2',
     fontSize: '0.88rem', fontWeight: 600, borderRadius: 4, border: 'none',
-    cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+    cursor: 'pointer', fontFamily: "var(--font-dm-sans), sans-serif",
     letterSpacing: '0.03em', transition: 'background 0.2s', marginTop: 4, marginBottom: -4,
   },
   success: {
     textAlign: 'center' as const, padding: '40px 20px',
   },
   successTitle: {
-    fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem',
+    fontFamily: "var(--font-playfair), Georgia, serif", fontSize: '1.6rem',
     fontWeight: 500, color: '#3E2E20', margin: '20px 0 12px',
   },
   successText: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.9rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.9rem',
     color: '#5C534A', lineHeight: 1.6, marginBottom: 24,
   },
   resetBtn: {
     padding: '10px 24px', background: 'transparent', color: '#6B5744',
     fontSize: '0.85rem', fontWeight: 500, borderRadius: 4,
     border: '1px solid #C8B99A', cursor: 'pointer',
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "var(--font-dm-sans), sans-serif",
   },
 }

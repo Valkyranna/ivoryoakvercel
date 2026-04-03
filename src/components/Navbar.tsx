@@ -178,12 +178,12 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex', flexDirection: 'column', lineHeight: 1,
   },
   logoName: {
-    fontFamily: "'Playfair Display', Georgia, serif",
+    fontFamily: "var(--font-playfair), Georgia, serif",
     fontSize: '1.1rem', fontWeight: 600, color: '#3E2E20',
     letterSpacing: '0.01em',
   },
   logoSub: {
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "var(--font-dm-sans), sans-serif",
     fontSize: '0.58rem', fontWeight: 500, letterSpacing: '0.14em',
     textTransform: 'uppercase' as const, color: '#C8A84E',
     marginTop: 2,
@@ -195,7 +195,7 @@ const s: Record<string, React.CSSProperties> = {
     position: 'relative', fontSize: '0.8rem', fontWeight: 500,
     background: 'none', border: 'none', cursor: 'pointer',
     transition: 'color 0.2s', letterSpacing: '0.02em',
-    fontFamily: "'DM Sans', sans-serif", padding: '6px 14px',
+    fontFamily: "var(--font-dm-sans), sans-serif", padding: '6px 14px',
     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
   },
   linkBar: {
@@ -208,7 +208,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   phone: {
     display: 'flex', alignItems: 'center', gap: 6,
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem', fontWeight: 500,
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.78rem', fontWeight: 500,
     color: '#8C8279', textDecoration: 'none', transition: 'color 0.2s',
     marginRight: 16,
   },
@@ -216,7 +216,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: '9px 22px', background: '#C8A84E', color: '#FFFFFF',
     fontSize: '0.78rem', fontWeight: 600, borderRadius: 4, border: 'none',
     cursor: 'pointer', transition: 'all 0.25s ease', letterSpacing: '0.03em',
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "var(--font-dm-sans), sans-serif",
   },
   hamburger: {
     display: 'none', alignItems: 'center', justifyContent: 'center',
@@ -234,7 +234,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: '20px 24px', borderBottom: '1px solid #EAE2D6',
   },
   drawerLogo: {
-    fontFamily: "'Playfair Display', Georgia, serif",
+    fontFamily: "var(--font-playfair), Georgia, serif",
     fontSize: '1.05rem', fontWeight: 600, color: '#3E2E20',
   },
   closeBtn: {
@@ -246,7 +246,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   drawerLink: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '14px 24px', fontFamily: "'DM Sans', sans-serif",
+    padding: '14px 24px', fontFamily: "var(--font-dm-sans), sans-serif",
     fontSize: '0.92rem', fontWeight: 500, color: '#3E2E20',
     background: 'none', border: 'none', cursor: 'pointer',
     borderBottom: '1px solid rgba(234,226,214,0.6)',
@@ -258,13 +258,13 @@ const s: Record<string, React.CSSProperties> = {
   },
   drawerPhone: {
     display: 'flex', alignItems: 'center', gap: 8,
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem',
+    fontFamily: "var(--font-dm-sans), sans-serif", fontSize: '0.85rem',
     color: '#8C8279', textDecoration: 'none',
   },
   drawerBook: {
     width: '100%', padding: '12px 0', background: '#6B5744', color: '#FAF7F2',
     fontSize: '0.85rem', fontWeight: 600, borderRadius: 4, border: 'none',
-    cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+    cursor: 'pointer', fontFamily: "var(--font-dm-sans), sans-serif",
     textAlign: 'center' as const,
   },
   backdrop: {
