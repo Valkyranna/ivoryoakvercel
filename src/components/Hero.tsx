@@ -71,6 +71,7 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
           style={s.bgVideo}
           suppressHydrationWarning
         >
+          <source media="(max-width: 768px)" src="/hero-video-mobile.webm" type="video/webm" />
           <source src="/hero-video.webm" type="video/webm" />
         </video>
         <div style={s.overlay} />
@@ -212,7 +213,11 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
       </div>
 
       <style>{`
+        .hero-video-desktop { display: block; }
+        .hero-video-mobile { display: none; }
         @media (max-width: 768px) {
+          .hero-video-desktop { display: none; }
+          .hero-video-mobile { display: block; }
           .hero-section { flex-direction: column !important; height: auto !important; }
           .hero-left { min-height: 280px !important; height: auto !important; flex: none !important; }
           .hero-right { max-width: 100% !important; min-height: auto !important; flex: none !important; overflow: visible !important; height: auto !important; }
