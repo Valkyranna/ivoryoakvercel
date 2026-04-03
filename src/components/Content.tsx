@@ -2,9 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import BeforeAfter from './BeforeAfter'
 import AddressSearch from './AddressSearch'
 import Reveal from './Reveal'
+
+const BeforeAfter = dynamic(() => import('./BeforeAfter'), {
+  ssr: false,
+  loading: () => <div style={{ width: '100%', height: 480, background: '#F3EDE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.85rem', color: '#8C8279' }}>Loading...</span></div>,
+})
 
 const InteractiveMap = dynamic(() => import('./InteractiveMap'), {
   ssr: false,
