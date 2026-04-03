@@ -10,20 +10,12 @@ interface Props {
 export default function Hero({ initialAddress = '', onAddressChange }: Props) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
-  const [addrResults, setAddrResults] = useState<Array<{ display_name: string }>>([])
-  const [addrFocused, setAddrFocused] = useState(false)
-  const addrDebounce = useRef<number>(0)
   const [form, setForm] = useState({
     name: '', phone: '', email: '', address: '', service: '', homeSize: '', date: '', notes: '',
   })
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth <= 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
+  const [addrResults, setAddrResults] = useState<Array<{ display_name: string }>>([])
+  const [addrFocused, setAddrFocused] = useState(false)
+  const addrDebounce = useRef<number>(0)
 
   useEffect(() => {
     if (initialAddress) setForm(p => ({ ...p, address: initialAddress }))
@@ -69,17 +61,18 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
     <section id="booking" style={s.hero} className="hero-section">
       {/* Left: Imagery & branding */}
       <div style={s.left} className="hero-left">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="/hero-poster.jpg"
-            style={s.bgVideo}
-          >
-            <source src={isMobile ? '/hero-video-480p.webm' : '/hero-video.webm'} type="video/webm" />
-          </video>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/hero-poster.jpg"
+          style={s.bgVideo}
+        >
+          <source media="(max-width: 768px)" src="/hero-video-480p.webm" type="video/webm" />
+          <source src="/hero-video.webm" type="video/webm" />
+        </video>
         <div style={s.overlay} />
         <div style={s.leftContent} className="hero-left-content">
           <h1 style={s.heading} className="hero-heading">
@@ -90,14 +83,6 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
             Professional home cleaning with the warmth of Southern hospitality. 
             Recurring, deep cleans, and move-in/move-out.
           </p>
-          {isMobile && (
-            <a href="tel:5135552532" style={s.callBtn}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              Call to Book: (513) 555-CLEAN
-            </a>
-          )}
         </div>
       </div>
 
@@ -235,7 +220,6 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
           .hero-heading { font-size: 1.8rem !important; }
           .hero-sub { font-size: 0.9rem !important; }
         }
-        }
       `}</style>
     </section>
   )
@@ -255,10 +239,6 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%', height: '100%', objectFit: 'cover' as const,
     transform: 'scale(1.02)',
   },
-  bgStatic: {
-    position: 'absolute', inset: 0,
-    background: 'linear-gradient(135deg, #3E2E20 0%, #5A7A5A 100%)',
-  },
   overlay: {
     position: 'absolute', inset: 0,
     background: 'linear-gradient(135deg, rgba(62,46,32,0.72) 0%, rgba(62,46,32,0.55) 50%, rgba(90,122,90,0.3) 100%)',
@@ -266,40 +246,14 @@ const s: Record<string, React.CSSProperties> = {
   leftContent: {
     position: 'relative', zIndex: 2, padding: '120px 60px 80px', maxWidth: 560,
   },
-  eyebrow: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', fontWeight: 600,
-    letterSpacing: '0.2em', textTransform: 'uppercase' as const,
-    color: 'rgba(200,168,78,0.9)', marginBottom: 20,
-  },
   heading: {
     fontFamily: "'Fraunces', Georgia, serif", fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
     fontWeight: 300, color: '#FAF7F2', lineHeight: 1.08, marginBottom: 24, letterSpacing: '-0.02em',
     fontOpticalSizing: 'auto',
-    willChange: 'opacity',
-    opacity: 1,
   },
   sub: {
     fontFamily: "'DM Sans', sans-serif", fontSize: '1.05rem', color: 'rgba(250,247,242,0.75)',
     lineHeight: 1.7, marginBottom: 32, maxWidth: 440,
-  },
-  callBtn: {
-    display: 'inline-flex', alignItems: 'center', gap: 8,
-    padding: '10px 20px', background: 'rgba(200,168,78,0.2)',
-    border: '1px solid rgba(200,168,78,0.4)', borderRadius: 6,
-    color: '#FAF7F2', fontFamily: "'DM Sans', sans-serif",
-    fontSize: '0.85rem', fontWeight: 600, textDecoration: 'none',
-    marginBottom: 20,
-  },
-  trustBar: {
-    display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' as const,
-  },
-  trustItem: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.78rem', fontWeight: 500,
-    color: 'rgba(250,247,242,0.7)',
-  },
-  trustDot: {
-    color: 'rgba(250,247,242,0.3)', fontSize: '0.9rem',
   },
   right: {
     flex: '0 0 440px', minHeight: '85vh', background: '#FFFFFF',
@@ -313,10 +267,6 @@ const s: Record<string, React.CSSProperties> = {
   formTitle: {
     fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.6rem',
     fontWeight: 500, color: '#3E2E20', marginBottom: 4,
-  },
-  formSub: {
-    fontFamily: "'DM Sans', sans-serif", fontSize: '0.8rem',
-    color: '#8C8279', marginBottom: 24,
   },
   formGroup: {
     marginBottom: 14, flex: 1,
@@ -370,10 +320,6 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: '0.88rem', fontWeight: 600, borderRadius: 4, border: 'none',
     cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
     letterSpacing: '0.03em', transition: 'background 0.2s', marginTop: 4, marginBottom: -4,
-  },
-  formNote: {
-    textAlign: 'center' as const, fontFamily: "'DM Sans', sans-serif",
-    fontSize: '0.72rem', color: '#8C8279', marginTop: 12,
   },
   success: {
     textAlign: 'center' as const, padding: '40px 20px',
