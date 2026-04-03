@@ -1,14 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import dynamic from 'next/dynamic'
 import MobileCTA from '@/components/MobileCTA'
 import GrainOverlay from '@/components/GrainOverlay'
 import ScrollToTop from '@/components/ScrollToTop'
-
-const ChatBot = dynamic(() => import('@/components/ChatBot'), {
-  ssr: false,
-  loading: () => null,
-})
+import ChatBot from '@/components/ChatBot'
 
 export const metadata: Metadata = {
   title: 'Ivory & Oak Cleaning Co. | Rooted in Care, Finished with Grace',
