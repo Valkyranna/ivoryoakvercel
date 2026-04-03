@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "minimax2.7oak&ivory",
@@ -11,6 +12,7 @@
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "react-leaflet": "^5.0.0",
+        "sharp": "^0.34.5",
       },
       "devDependencies": {
         "@types/bun": "latest",

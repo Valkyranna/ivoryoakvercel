@@ -4,18 +4,18 @@ import { useState, useRef, useCallback } from 'react'
 
 const comparisons = [
   {
-    before: 'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=1000&q=75',
-    after: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1000&q=75',
+    before: '/images/before-after/kitchen-before.avif',
+    after: '/images/before-after/kitchen-after.avif',
     label: 'Kitchen',
   },
   {
-    before: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1000&q=75',
-    after: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=75',
+    before: '/images/before-after/livingroom-before.avif',
+    after: '/images/before-after/livingroom-after.avif',
     label: 'Living Room',
   },
   {
-    before: 'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?w=1000&q=75',
-    after: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1000&q=75',
+    before: '/images/before-after/bathroom-before.avif',
+    after: '/images/before-after/bathroom-after.avif',
     label: 'Bathroom',
   },
 ]
