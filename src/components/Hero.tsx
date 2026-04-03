@@ -218,7 +218,7 @@ export default function Hero({ initialAddress = '', onAddressChange }: Props) {
         @media (max-width: 768px) {
           .hero-video-desktop { display: none; }
           .hero-video-mobile { display: block; }
-          .hero-section { flex-direction: column !important; height: auto !important; }
+          .hero-section { flex-direction: column !important; height: auto !important; background: #FFFFFF !important; }
           .hero-left { min-height: 280px !important; height: auto !important; flex: none !important; margin-bottom: 24px !important; }
           .hero-right { max-width: 100% !important; min-height: auto !important; flex: none !important; overflow: visible !important; height: auto !important; padding-top: 24px !important; }
           .hero-left-content { padding: 80px 24px 40px !important; }
